@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Speech Synthesis</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>Speak the text</h1>
+
+    <select name="voice" id="voices">
+      <option value="">Select A Voice</option>
+    </select>
+
+    <!--value for name attribute (rate, pitch, text) corresponds to voice utterance properties, so don't change them-->
+    <label for="rate">Rate:</label>
+    <input name="rate" type="range" min="0" max="3" value="1" step="0.1">
+
+    <label for="pitch">Pitch:</label>
+
+    <input name="pitch" type="range" min="0" max="2" step="0.1">
+    <textarea name="text">I finished the fun project 😌</textarea>
+    <span><button id="stop">Stop!</button><button id="speak">Speak</button></span>
+  </div>
+  <div class="text-container">
+    <h1>Speak text</h1>
+    <p name="text1"><a href="">Good Morning</a></p>
+    <p name="text2"><a href="">Have a good day!</a></p>
+    <p name="text3"><a href="">Happy coding!!</a></p>
+    <p name="text4"><a href="">Did you finish it?</a></p>
+    <p name="text5"><a href="">Sunny Day!!</a></p>
+    <p name="text6"><a href="">Enjoy your weekend 👍</a></p>
+    <p name="text7"><a href="">Jag kör den roda bilen</a></p>
+  </div>
+
+  <script>
+    const msg = new SpeechSynthesisUtterance();
+    let voicesList = [];
+    const voicesDropdown = document.querySelector('[name="voice"]');
+    const options = document.querySelectorAll('[type="range"], [name="text"]');
+    const speakButton = document.querySelector('#speak');
+    const stopButton = document.querySelector('#stop');
+    const textmsg1=document.querySelector('[name="text1"]');
+    const textmsg2=document.querySelector('[name="text2"]');
+    const textmsg3=document.querySelector('[name="text3"]');
+    const textmsg4=document.querySelector('[name="text4"]');
+    const textmsg5=document.querySelector('[name="text5"]');
+    const textmsg6=document.querySelector('[name="text6"]');
+    const textmsg7=document.querySelector('[name="text7"]');
+
+    msg.text = document.querySelector('[name=text]').value;
+
+    function populateVoices() { //set drop down menu options
+      voicesList = this.getVoices();
+      voicesDropdown.innerHTML = voicesList
+//        .filter(voice => voice.lang.includes('en'))
+        .map(voice => `<option value="${voice.name}">${voice.name} (${voice.lang})</option>`)
+        .join('');
+
+    }
+
+    function setVoice() {
+      msg.voice = voicesList.find(voice => voice.name === this.value); //find which voice matches the one selected
+      toggle();
+    }
+    function setText(textval) {
+      msg.text = textval;
+      speechSynthesis.speak(msg);
+    }
+    function toggle(startOver = true) {
+      speechSynthesis.cancel(); //stop from speaking
+      if (startOver) {
+        speechSynthesis.speak(msg);
+      }
+    }
+
+    function setOption() {
+      msg[this.name] = this.value; //put value into the value of the corresponding property; name attribute above important now!
+      toggle();
+    }
+
+  //speechSynthesis is a global variable (like document)
+    speechSynthesis.addEventListener('voiceschanged', populateVoices); //event happens when speechSynthesis loads
+    voicesDropdown.addEventListener('change', setVoice);
+    options.forEach(option => option.addEventListener('change', setOption));
+    speakButton.addEventListener('click', toggle);
+    stopButton.addEventListener('click', () => toggle(false)); //can't just do toggle(false) because it will set toggle to false on page load
+    textmsg1.addEventListener('click', () => setText(textmsg1.innerText));
+    textmsg2.addEventListener('click', () => setText(textmsg2.innerText));
+    textmsg3.addEventListener('click', () => setText(textmsg3.innerText));
+    textmsg4.addEventListener('click', () => setText(textmsg4.innerText));
+    textmsg5.addEventListener('click', () => setText(textmsg5.innerText));
+    textmsg6.addEventListener('click', () => setText(textmsg6.innerText));
+    textmsg7.addEventListener('click', () => setText(textmsg7.innerText));
+  </script>
+</body>
+
+</html>

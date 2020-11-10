@@ -1,0 +1,74 @@
+* {
+  font-family: cursive;
+  box-sizing: border-box;
+}
+
+body {
+  padding: 5%;
+  background-color: darkblue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.container, .text-container {
+  padding: 8px;
+  width: 50%;
+  border: 10px solid black;
+  border-radius: 15%;
+  background: white;
+  display: flex;
+  margin-right: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.text-container {
+  width: 30%;
+}
+.text-container a{
+  text-decoration: none;
+}
+.text-container p{
+  padding: 5px;
+  margin: 5px;
+}
+h1 {
+  border: 2px solid yellow;
+  background: black;
+  color: white;
+  padding: 5px 15px;
+  text-align: center;
+  font-size: x-large;
+}
+
+.container input, .container select, .container textarea {
+  width: 80%;
+  margin: 5px;
+  padding: 5px;
+  font-size: large;
+  background: #F7F7F7;
+}
+
+.container textarea {
+  height: 400;
+}
+
+.container button {
+  width: auto;
+  margin: 5px;
+  font-size: large;
+  border-radius: 50%;
+  text-align: center;
+}
+#speak {
+    background-image: radial-gradient(white, green);
+    padding: 18px 5px;
+    color: black;
+  }
+#stop {
+  padding: 18px 8px;
+  background-image: radial-gradient(white, red);
+  color: black;
+}
